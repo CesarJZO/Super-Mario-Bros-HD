@@ -129,6 +129,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -952,6 +953,42 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Flag_0: -5391879529046575787
+      Block_Used: 5089713165793692188
+      Pipe_2: 3062189330265537062
+      Castle_Flag: -2027768988174841985
+      Cloud_5: 3371635014090334378
+      Block_Question: -446867404522521166
+      Cloud_1: 1215948700918501126
+      Castle_Door_0: 6704674279086497085
+      Pipe_5: 6624564900204519675
+      Castle_Window_0: 3914693016000628799
+      Pipe_4: 7639126416902016418
+      Bush_2: 5357120858899214548
+      Mountain_3: -3991350176519637132
+      Mountain_1: -2994877863233710035
+      Castle_Door_1: -3610254309448376044
+      Bush_0: 1648749068166103451
+      Cloud_4: -3707002486540017073
+      Bush_1: -2213567507432036408
+      Pipe_1: -4500993874483076431
+      Mountain_4: -1812239924292666704
+      Pipe_0: 2713915087196460949
+      Cloud_2: 3402626008137936661
+      Castle_Top: 6521106915325849606
+      Mountain_2: -7033716677687157895
+      Castle_Wall: -8660716236246925858
+      Mountain_0: 3411122762858479303
+      Castle_Window_1: -1748565696620533181
+      Cloud_3: 9048288764117043530
+      Ground: -6081611462039590206
+      Pipe_3: 2748799819732492174
+      Flag_1: 6349013988125360775
+      Block_Hard: -5508807443964245338
+      Flag_2: -7963306881671151232
+      Cloud_0: 5527991814459261845
+      Bricks: -2753597471096352698
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
