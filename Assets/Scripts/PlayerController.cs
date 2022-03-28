@@ -1,49 +1,59 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 10;
-    public float jumpStrength = 10;
-    public string horizontalAxis = "Horizontal";
-    public string jumpButton = "Jump";
-    public string runButton = "Run";
-    float deadZone = 0.15f;
-    Vector2 direction;
-    Rigidbody2D rb;
-    SpriteRenderer sr;
-    Animator animator;
+    [SerializeField] float speed = 10;
+    [SerializeField] float jumpStrength = 10;
+
+    PlayerInput _playerInput;
+    InputAction _move;
+    InputAction _jump;
+    InputAction _run;
+    Vector2 _direction;
+    float _absAxis;
+    Rigidbody2D _rigidBody;
+    SpriteRenderer _sprite;
+    Animator _animator;
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
-        direction = new Vector2();
+        _rigidBody = GetComponent<Rigidbody2D>();
+        _sprite = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
+        _playerInput = GetComponent<PlayerInput>();
+        _direction = new Vector2();
+        
+        _move = _playerInput.actions["Move"];
+        _jump = _playerInput.actions["Jump"];
+        _run = _playerInput.actions["Run"];
     }
 
     void Update()
     {
-        Debug.Log(Input.GetAxis(horizontalAxis));
-        Debug.Log(Input.GetAxis("Vertical"));
-        // direction.y = rb.velocity.y;
-        direction.x = Input.GetAxis(horizontalAxis) * speed;
-        // rb.velocity = direction;
-        if (Mathf.Abs(rb.velocity.x) < speed)
-            rb.AddForce(direction);
-        if (Input.GetButtonDown(jumpButton))
-            rb.AddForce(Vector2.up * jumpStrength, ForceMode2D.Impulse);
-        if (Mathf.Abs(rb.velocity.x) > deadZone)
-            sr.flipX = rb.velocity.x < 0;
+        _direction.x = _move.ReadValue<float>() * speed;        
+    }
+
+    void FixedUpdate()
+    {
+        _direction.y = _rigidBody.velocity.y;
+        _absAxis = Mathf.Abs(_rigidBody.velocity.x);
+        if (_absAxis < speed)
+            _rigidBody.AddForce(_direction);
+        if (_jump.triggered)
+            _rigidBody.AddForce(Vector2.up * jumpStrength, ForceMode2D.Impulse);
     }
 
     void LateUpdate()
     {
-        float rbx = rb.velocity.x;
-        float rby = rb.velocity.y;
-        float inx = Input.GetAxis(horizontalAxis);
-        animator.SetBool("Idle", rbx == 0 && rby == 0);
-        animator.SetBool("Jump", Mathf.Abs(rby) > 0.15f);
-        animator.SetBool("Turn", rbx > 0 && inx < 0 || rbx < 0 && inx > 0);
-        animator.SetFloat("Horizontal", rbx);
+        if (_absAxis > 0.1f)
+            _sprite.flipX = _rigidBody.velocity.x < 0;
+        float rbx = _rigidBody.velocity.x;
+        float rby = _rigidBody.velocity.y;
+        float inx = _move.ReadValue<float>();
+        _animator.SetBool("Idle", rbx == 0 && rby == 0);
+        _animator.SetBool("Jump", Mathf.Abs(rby) > 0.15f);
+        _animator.SetBool("Turn", rbx > 0 && inx < 0 || rbx < 0 && inx > 0);
+        _animator.SetFloat("Horizontal", rbx);
     }
 }
