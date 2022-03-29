@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 66693469}
   - component: {fileID: 66693468}
   - component: {fileID: 66693467}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10883,6 +10883,18 @@ PrefabInstance:
     - target: {fileID: 6944622106347760641, guid: c6669936792b6e94d95772acc9c7ff10, type: 3}
       propertyPath: m_Name
       value: Mario
+      objectReference: {fileID: 0}
+    - target: {fileID: 6944622106347760644, guid: c6669936792b6e94d95772acc9c7ff10, type: 3}
+      propertyPath: _groundLength
+      value: 0.5625
+      objectReference: {fileID: 0}
+    - target: {fileID: 6944622106347760644, guid: c6669936792b6e94d95772acc9c7ff10, type: 3}
+      propertyPath: _colliderOffset.x
+      value: 0.375
+      objectReference: {fileID: 0}
+    - target: {fileID: 6944622106347760644, guid: c6669936792b6e94d95772acc9c7ff10, type: 3}
+      propertyPath: _groundLayer.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 6944622106347760647, guid: c6669936792b6e94d95772acc9c7ff10, type: 3}
       propertyPath: m_RootOrder
