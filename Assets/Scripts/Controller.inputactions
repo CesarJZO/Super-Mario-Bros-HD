@@ -28,7 +28,7 @@
                     "type": "Value",
                     "id": "c853595b-da7d-4ae9-96a7-6b7be8eb3e79",
                     "expectedControlType": "Axis",
-                    "processors": "AxisDeadzone",
+                    "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 }
