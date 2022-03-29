@@ -85,14 +85,14 @@ public class PlayerController : MonoBehaviour
 
     void LateUpdate()
     {
-        float rbx = Mathf.Abs(_rigidBody.velocity.x);
-        float rby = _rigidBody.velocity.y;
-        float inx = _move.ReadValue<float>();
-        _animator.SetBool("Idle", rbx == 0 && rby == 0);
+        _sprite.flipX = _facingLeft;
+        float xVelocity = _rigidBody.velocity.x;
+        float yVelocity = _rigidBody.velocity.y;
+        float xInput = _move.ReadValue<float>();
+        _animator.SetFloat("Horizontal", Mathf.Abs(xVelocity));
+        _animator.SetFloat("Vertical", yVelocity);
         _animator.SetBool("Grounded", _onGround);
-        _animator.SetBool("Jump", Mathf.Abs(rby) > 0.15f);
-        _animator.SetBool("Turn", rbx > 0 && inx < 0 || rbx < 0 && inx > 0);
-        _animator.SetFloat("Horizontal", rbx);
+        _animator.SetBool("Turn", xVelocity > 0 && xInput < 0 || xVelocity < 0 && xInput > 0);
     }
 
     void MoveCharacter(float horizontal)
@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
         _rigidBody.AddForce(Vector2.right * horizontal * _speed);
 
         if (horizontal > 0 && _facingLeft || horizontal < 0 && !_facingLeft)
-            _sprite.flipX = !_facingLeft;
+            _facingLeft = !_facingLeft;
 
         if (Mathf.Abs(_rigidBody.velocity.x) > _maxSpeed)
             _rigidBody.velocity = new Vector2(
@@ -114,7 +114,6 @@ public class PlayerController : MonoBehaviour
         _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, 0);
         _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
         _jumpTimer = 0f;
-
     }
 
     void ModifyPhysics()

@@ -8466,7 +8466,7 @@ GameObject:
   - component: {fileID: 1848980536}
   - component: {fileID: 1848980535}
   - component: {fileID: 1848980534}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Obstacles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10939,6 +10939,10 @@ PrefabInstance:
     - target: {fileID: 6944622106347760647, guid: c6669936792b6e94d95772acc9c7ff10, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6944622106347760667, guid: c6669936792b6e94d95772acc9c7ff10, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6669936792b6e94d95772acc9c7ff10, type: 3}
