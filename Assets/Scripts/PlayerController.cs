@@ -6,8 +6,7 @@ public class PlayerController : MonoBehaviour
     [Header("Horizontal Movement")]
     [SerializeField] float _speed = 10f;
     bool _facingLeft;
-    // TODO: If y input is ignored, change this to float
-    Vector2 _direction;
+    float _direction;
 
     [Header("Vertical Movement")]
     [SerializeField] float _jumpStrength = 15f;
@@ -44,7 +43,6 @@ public class PlayerController : MonoBehaviour
         _sprite = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
         _playerInput = GetComponent<PlayerInput>();
-        _direction = new Vector2();
 
         _move = _playerInput.actions["Move"];
         _jump = _playerInput.actions["Jump"];
@@ -55,9 +53,9 @@ public class PlayerController : MonoBehaviour
     {
         float moveValue = _move.ReadValue<float>();
         if (moveValue != 0f)
-            _direction.x = moveValue > 0 ? 1f : -1f;
+            _direction = moveValue > 0 ? 1f : -1f;
         else
-            _direction.x = 0f;
+            _direction = 0f;
 
         if (_jump.triggered)
             _jumpTimer = Time.time + _jumpDelay;
@@ -75,7 +73,7 @@ public class PlayerController : MonoBehaviour
         );
         _onGround = leftRaycast || rightRaycast;
 
-        MoveCharacter(_direction.x);
+        MoveCharacter();
 
         if (_jumpTimer > Time.time && _onGround)
             Jump();
@@ -95,11 +93,11 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("Turn", xVelocity > 0 && xInput < 0 || xVelocity < 0 && xInput > 0);
     }
 
-    void MoveCharacter(float horizontal)
+    void MoveCharacter()
     {
-        _rigidBody.AddForce(Vector2.right * horizontal * _speed);
+        _rigidBody.AddForce(Vector2.right * _direction * _speed);
 
-        if (horizontal > 0 && _facingLeft || horizontal < 0 && !_facingLeft)
+        if (_direction > 0 && _facingLeft || _direction < 0 && !_facingLeft)
             _facingLeft = !_facingLeft;
 
         if (Mathf.Abs(_rigidBody.velocity.x) > _maxSpeed)
@@ -118,11 +116,11 @@ public class PlayerController : MonoBehaviour
 
     void ModifyPhysics()
     {
-        bool changingDirections = _direction.x > 0 && _rigidBody.velocity.x < 0 || _direction.x < 0 && _rigidBody.velocity.x > 0;
+        bool changingDirections = _direction > 0 && _rigidBody.velocity.x < 0 || _direction < 0 && _rigidBody.velocity.x > 0;
 
         if (_onGround)
         {
-            if (Mathf.Abs(_direction.x) < 0.4f || changingDirections)
+            if (Mathf.Abs(_direction) < 0.4f || changingDirections)
                 _rigidBody.drag = _linearDrag;
             else
                 _rigidBody.drag = 0;
