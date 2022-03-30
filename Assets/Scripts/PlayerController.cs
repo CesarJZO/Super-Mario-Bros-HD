@@ -4,7 +4,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("Horizontal Movement")]
-    [SerializeField] float _speed = 10f;
+    [SerializeField] float _walkSpeed = 7f;
+    [SerializeField] float _runSpeed = 20f;
     bool _facingLeft;
     float _direction;
 
@@ -14,10 +15,11 @@ public class PlayerController : MonoBehaviour
     private float _jumpTimer;
 
     [Header("Physics")]
-    [SerializeField] float _maxSpeed = 7f;
+    [SerializeField] float _acceleration = 10f;
     [SerializeField] float _linearDrag = 4f;
     [SerializeField] float _gravity = 1f;
     [SerializeField] float _fallMultiplier = 5f;
+    float _maxSpeed;
 
     [Header("Collision")]
     [SerializeField] float _groundLength = 0.6f;
@@ -59,6 +61,11 @@ public class PlayerController : MonoBehaviour
 
         if (_jump.triggered)
             _jumpTimer = Time.time + _jumpDelay;
+
+        if (_run.IsPressed())
+            _maxSpeed = _runSpeed;
+        else
+            _maxSpeed = _walkSpeed;
     }
 
     void FixedUpdate()
@@ -91,11 +98,12 @@ public class PlayerController : MonoBehaviour
         _animator.SetFloat("Vertical", yVelocity);
         _animator.SetBool("Grounded", _onGround);
         _animator.SetBool("Turn", xVelocity > 0 && xInput < 0 || xVelocity < 0 && xInput > 0);
+        _animator.SetFloat("Fall", yVelocity < -0.1f ? 0 : 1);
     }
 
     void MoveCharacter()
     {
-        _rigidBody.AddForce(Vector2.right * _direction * _speed);
+        _rigidBody.AddForce(Vector2.right * _direction * _acceleration);
 
         if (_direction > 0 && _facingLeft || _direction < 0 && !_facingLeft)
             _facingLeft = !_facingLeft;
